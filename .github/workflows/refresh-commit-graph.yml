@@ -1,0 +1,64 @@
+name: Refresh commit graph
+
+on:
+  schedule:
+    - cron: '1 0 * * *'   # 00:01 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-commit-graph
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # No setup-python and no pip: python3 and gh are preinstalled on the
+      # runner, and gen-commit-graph.py is stdlib-only. Nothing to cache.
+      - name: Fetch commit dates
+        env:
+          GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::ORG_READ_TOKEN is not set. The built-in GITHUB_TOKEN cannot read other private repos."
+            exit 1
+          fi
+          SINCE=$(date -u -d '32 weeks ago' +%Y-%m-%dT00:00:00Z)
+          : > commits.tsv
+          gh repo list tomsstudio --limit 100 --json name --jq '.[].name' \
+          | while read -r r; do
+              gh api --paginate "repos/tomsstudio/$r/commits?since=$SINCE&per_page=100" \
+                --jq '.[] | select((.author.login // .commit.author.name)
+                      | test("\\[bot\\]|bot$"; "i") | not) | .commit.author.date[0:10]' \
+                >> commits.tsv 2>/dev/null || true
+            done
+          if [ ! -s commits.tsv ]; then
+            echo "::error::No commits fetched - check ORG_READ_TOKEN has repo scope."
+            exit 1
+          fi
+          echo "fetched $(wc -l < commits.tsv) commit dates"
+
+      - name: Regenerate commit graph
+        run: python3 tools/gen-commit-graph.py . profile/assets
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add profile/assets/commits-light.svg profile/assets/commits-dark.svg
+          if git diff --cached --quiet; then
+            echo "no change"
+          else
+            git commit -m 'Refresh commit graph [skip ci]'
+            git push
+          fi

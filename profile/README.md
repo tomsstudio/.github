@@ -1,12 +1,28 @@
-## Hi there 👋
+<div align="center">
 
-<!--
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.png">
+  <img alt="Tom's Studio" src="assets/logo-black.png" height="100">
+</picture>
 
-**Here are some ideas to get you started:**
+<br>
 
-🙋‍♀️ A short introduction - what is your organization all about?
-🌈 Contribution guidelines - how can the community get involved?
-👩‍💻 Useful resources - where can the community find your docs? Is there anything else the community should know?
-🍿 Fun facts - what does your team eat for breakfast?
-🧙 Remember, you can do mighty things with the power of [Markdown](https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
--->
+**Infinitely refillable pens and creative tools, made in Frome, Somerset.**
+
+<br>
+
+![Made in Frome, Somerset](https://img.shields.io/badge/Made%20in-Frome%2C%20Somerset-004c43?style=flat-square)
+[![tomsstudio.co.uk](https://img.shields.io/badge/tomsstudio.co.uk-be9773?style=flat-square)](https://www.tomsstudio.co.uk)
+
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/commits-dark.svg">
+  <img alt="Commit activity across the organisation, last 32 weeks" src="assets/commits-light.svg" width="600" height="185">
+</picture>
+
+<br>
+
+[tomsstudio.co.uk](https://www.tomsstudio.co.uk) · [@tomsstudio](https://www.instagram.com/tomsstudio)
+
+</div>
