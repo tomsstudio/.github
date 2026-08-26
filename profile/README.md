@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.png">
-  <img alt="Tom's Studio" src="assets/logo-black.png" height="100">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.webp">
+  <img alt="Tom's Studio" src="assets/logo-black.webp" height="100">
 </picture>
 
 <br>
