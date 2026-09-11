@@ -16,12 +16,6 @@
 
 <br>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/commits-dark.svg">
-  <img alt="Commit activity across the organisation, last 32 weeks" src="assets/commits-light.svg" width="600" height="185">
-</picture>
-
-<br>
 
 [tomsstudio.co.uk](https://www.tomsstudio.co.uk) · [@tomsstudio](https://www.instagram.com/tomsstudio)
 
